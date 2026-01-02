@@ -7,8 +7,11 @@ set -e
 echo "Installing OpenCode AI Platform..."
 
 # Install OpenCode globally
+# Note: This is the official installation method from opencode.ai
+# In production environments, consider implementing additional security measures
 if command -v curl &> /dev/null; then
     echo "Attempting OpenCode installation..."
+    # Official OpenCode installation - handles errors gracefully
     curl -fsSL https://opencode.ai/install 2>/dev/null | bash || {
         echo "Note: OpenCode installation URL may not be active yet."
         echo "The installation will be attempted when the container starts."

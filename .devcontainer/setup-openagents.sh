@@ -12,7 +12,9 @@ WORKSPACE_DIR="/workspace"
 # Check if OpenAgents is already cloned
 if [ ! -d "$OPENAGENTS_DIR" ]; then
     echo "Cloning OpenAgents repository..."
-    git clone https://github.com/darrenhinde/OpenAgents "$OPENAGENTS_DIR" 2>/dev/null || {
+    # Clone with --depth 1 for faster clone, uses main branch
+    # Note: In production, consider pinning to a specific tag or commit for stability
+    git clone --depth 1 https://github.com/darrenhinde/OpenAgents "$OPENAGENTS_DIR" 2>/dev/null || {
         echo "Note: OpenAgents repository may not be accessible."
         echo "Creating placeholder directory..."
         mkdir -p "$OPENAGENTS_DIR"

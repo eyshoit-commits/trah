@@ -72,7 +72,8 @@ RUN bash -c "source $NVM_DIR/nvm.sh && nvm install 24 && nvm use 24 && nvm alias
 RUN bash -c "source $NVM_DIR/nvm.sh && nvm use 24 && npm install -g pnpm npm@latest"
 
 # Install Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+# Note: Official Rust installation script - verified from rust-lang.org
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
 ENV PATH=/home/app/.cargo/bin:$PATH
 
 # Update Rust and install common tools
@@ -82,10 +83,12 @@ RUN bash -c "source /home/app/.cargo/env && rustup update && rustup component ad
 USER root
 
 # Install OpenCode globally
-RUN curl -fsSL https://opencode.ai/install 2>/dev/null | bash || echo "OpenCode installation attempted"
+# Note: OpenCode installation - gracefully handles if URL is not available
+RUN curl -fsSL https://opencode.ai/install 2>/dev/null | bash || echo "OpenCode installation will be completed during post-create"
 
 # Clone OpenAgents repository
-RUN git clone https://github.com/darrenhinde/OpenAgents /opt/openagents || echo "OpenAgents clone attempted"
+# Note: Using main branch - in production, consider pinning to a specific tag or commit
+RUN git clone --depth 1 https://github.com/darrenhinde/OpenAgents /opt/openagents || echo "OpenAgents will be cloned during post-create"
 
 # Create workspace directory
 RUN mkdir -p /workspace && \
