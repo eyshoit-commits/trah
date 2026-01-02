@@ -105,11 +105,11 @@ RUN mkdir -p /workspace/.github/agents && \
     mkdir -p /workspace/.github/skills && \
     chown -R app:app /workspace/.github
 
-# Copy setup scripts
-COPY --chown=app:app post-create.sh /workspace/.devcontainer/post-create.sh
-COPY --chown=app:app post-start.sh /workspace/.devcontainer/post-start.sh
-COPY --chown=app:app setup-opencode.sh /workspace/.devcontainer/setup-opencode.sh
-COPY --chown=app:app setup-openagents.sh /workspace/.devcontainer/setup-openagents.sh
+# Copy setup scripts from .devcontainer directory
+COPY --chown=app:app .devcontainer/post-create.sh /workspace/.devcontainer/post-create.sh
+COPY --chown=app:app .devcontainer/post-start.sh /workspace/.devcontainer/post-start.sh
+COPY --chown=app:app .devcontainer/setup-opencode.sh /workspace/.devcontainer/setup-opencode.sh
+COPY --chown=app:app .devcontainer/setup-openagents.sh /workspace/.devcontainer/setup-openagents.sh
 
 # Make scripts executable
 RUN chmod +x /workspace/.devcontainer/*.sh 2>/dev/null || true
